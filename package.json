@@ -1,0 +1,27 @@
+{
+  "name": "transient",
+  "version": "0.0.0",
+  "description": "",
+  "main": "server.js",
+  "devDependencies": {
+    "browserify": "^5.12.0",
+    "karma": "^0.12.23",
+    "karma-browserify": "^0.2.1",
+    "karma-jasmine": "^0.1.5",
+    "karma-phantomjs-launcher": "^0.1.4"
+  },
+  "scripts": {
+    "test": "karma start",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bryzaguy/transient.git"
+  },
+  "author": "Bryant Syme",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/bryzaguy/transient/issues"
+  },
+  "homepage": "https://github.com/bryzaguy/transient"
+}
