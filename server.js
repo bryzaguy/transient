@@ -13,6 +13,6 @@ http.createServer(function (req, res) {
 	res.writeHead(200, {
 		'Content-Type': 'text/html'
 	});
-	res.write('<h1>hello, i know nodejitsu, better and stuff.</h1>');
+	res.write('<h1>hello, i know nodejitsu, secure</h1>');
 	res.end();
 }).listen(443); // the server will listen on port 8080
