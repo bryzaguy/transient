@@ -9,7 +9,11 @@
             document.getElementById("chatlog").innerHTML = ("<hr/>" +
             data.message + document.getElementById("chatlog").innerHTML);
         });
-
+        
+        function sendMessage() {
+            var msg = document.getElementById("message_input").value;
+            socketio.emit("message_to_server", { message : msg});
+        }
         </script>
     </head>
     <body>
