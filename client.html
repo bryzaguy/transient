@@ -7,20 +7,25 @@
         var socketio = io.connect(location.href);
         socketio.on("message_to_client", function(data) {
             document.getElementById("chatlog").innerHTML = ("<hr/>" +
+            data.username + ': ' +
             data.message + document.getElementById("chatlog").innerHTML);
+
         });
 
         function sendMessage(event) {
           if (!event || event.keyCode ===  13) {
+            var message = {};
             var msgElem = document.getElementById("message_input");
+            var username = document.getElementById("username").value;
             var msg = msgElem.value;
-            socketio.emit("message_to_server", { message : msg });
+            socketio.emit("message_to_server", { message : msg, username: username });
             msgElem.value = '';
           }
         }
         </script>
     </head>
     <body>
+        <input type="text" id="username"/>
         <input onkeypress="sendMessage(event)" type="text" id="message_input"/>
         <button onclick="sendMessage()">send</button>
         <div id="chatlog"></div>
