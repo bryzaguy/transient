@@ -10,14 +10,18 @@
             data.message + document.getElementById("chatlog").innerHTML);
         });
 
-        function sendMessage() {
-            var msg = document.getElementById("message_input").value;
-            socketio.emit("message_to_server", { message : msg});
+        function sendMessage(event) {
+          if (!event || event.keyCode ===  13) {
+            var msgElem = document.getElementById("message_input");
+            var msg = msgElem.value;
+            socketio.emit("message_to_server", { message : msg });
+            msgElem.value = '';
+          }
         }
         </script>
     </head>
     <body>
-        <input type="text" id="message_input"/>
+        <input onkeypress="sendMessage(event)" type="text" id="message_input"/>
         <button onclick="sendMessage()">send</button>
         <div id="chatlog"></div>
     </body>
