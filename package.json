@@ -27,5 +27,8 @@
   "subdomain": "bryguy-transient",
   "engines": {
     "node": "0.10.x"
+  },
+  "dependencies": {
+    "socket.io": "^1.3.5"
   }
 }
