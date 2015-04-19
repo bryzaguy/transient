@@ -4,24 +4,26 @@
         <script src="/socket.io/socket.io.js"></script>
         <script type="text/javascript">
 
-        var socketio = io.connect(location.href);
-        socketio.on("message_to_client", function(data) {
-            document.getElementById("chatlog").innerHTML = ("<hr/>" +
-            data.username + ': ' +
-            data.message + document.getElementById("chatlog").innerHTML);
+          var socketio = io.connect(location.href);
 
-        });
+          socketio.on("message_to_client", function(data) {
+              document.getElementById("chatlog").innerHTML = ("<hr/>" +
+              data.username + ': ' +
+              data.message + document.getElementById("chatlog").innerHTML);
+          });
 
-        function sendMessage(event) {
-          if (!event || event.keyCode ===  13) {
-            var message = {};
-            var msgElem = document.getElementById("message_input");
-            var username = document.getElementById("username").value;
-            var msg = msgElem.value;
-            socketio.emit("message_to_server", { message : msg, username: username });
-            msgElem.value = '';
+          function sendMessage(event) {
+            if (!event || event.keyCode ===  13) {
+              var msgElem = document.getElementById("message_input");
+              var username = document.getElementById("username").value;
+              socketio.emit("message_to_server", { 
+                message : msgElem.value, 
+                username: username 
+              });
+              msgElem.value = '';
+            }
           }
-        }
+
         </script>
     </head>
     <body>
