@@ -28,7 +28,7 @@
         <label>Username:</label>
         <input type="text" id="username"/>
         <label>Message:</label>
-        <input onkeypress="sendMessage(event)" type="text" id="message_input"/>
+        <input autocomplete="off" onkeypress="sendMessage(event)" type="text" id="message_input"/>
         <button onclick="sendMessage()">send</button>
         <div id="chatlog"></div>
     </body>
