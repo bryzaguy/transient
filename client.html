@@ -7,9 +7,9 @@
           var socketio = io.connect(location.href);
 
           socketio.on("message_to_client", function(data) {
-              document.getElementById("chatlog").innerHTML = ("<hr/>" +
-              data.username + ': ' +
-              data.message + document.getElementById("chatlog").innerHTML);
+            var chatlog = document.getElementById("chatlog");
+            var message = data.username + ' ('+ data.sentOn + '): ' + data.message;
+            chatlog.innerHTML = chatlog.innerHTML + "<br/>" + message;
           });
 
           function sendMessage(event) {
@@ -18,6 +18,7 @@
               var username = document.getElementById("username").value;
               socketio.emit("message_to_server", { 
                 message : msgElem.value, 
+                sentOn: new Date(),
                 username: username 
               });
               msgElem.value = '';
