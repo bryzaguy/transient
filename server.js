@@ -1,6 +1,6 @@
 var http = require('http'),
   fs = require('fs'),
-  sanitize = require('validator').sanitize;
+  validator = require('validator');
 
 var app = http.createServer(function (request, response) {
   fs.readFile("client.html", 'utf-8', function (error, data) {
@@ -15,12 +15,13 @@ var app = http.createServer(function (request, response) {
 var io = require('socket.io').listen(app);
 
 io.sockets.on('connection', function (socket) {
+  //socket.emit('')
   socket.on('message_to_server', function (data) {
-    var escaped_message = sanitize(data.message).escape();
+    var escaped_message = validator.escape(data.message);
     io.sockets.emit("message_to_client", {
       message: escaped_message,
-      sentOn: data.sentOn || new Date(),
-      username: data.username || 'anonymous-' + socket.handshake.address
+      sentOn: validator.escape(data.sentOn) || new Date(),
+      username: validator.escape(data.username) || 'anonymous-' + socket.handshake.address
     });
   });
 });
