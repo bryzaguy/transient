@@ -1,38 +1,67 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="/socket.io/socket.io.js"></script>
-        <script type="text/javascript">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+      <script src="/socket.io/socket.io.js"></script>
+      <script type="text/javascript">
 
-          var socketio = io.connect(location.href);
+        var socketio = io.connect(location.href);
 
-          socketio.on("message_to_client", function(data) {
-            var chatlog = document.getElementById("chatlog");
-            var message = data.username + ' ('+ data.sentOn + '): ' + data.message;
-            chatlog.innerHTML = chatlog.innerHTML + "<br/>" + message;
-          });
+        function addMessage(msg) {
+          var chatlog = document.getElementById("chatlog");
+          var li = document.createElement('li');
+          li.innerHTML = msg.username + ' ('+ msg.sentOn + '): ' + msg.message;
+          chatlog.appendChild(li);
+          document.getElementById('message_input').focus();
+        }
 
-          function sendMessage(event) {
-            if (!event || event.keyCode ===  13) {
-              var msgElem = document.getElementById("message_input");
-              var username = document.getElementById("username").value;
-              socketio.emit("message_to_server", { 
-                message : msgElem.value, 
-                sentOn: new Date(),
-                username: username 
-              });
-              msgElem.value = '';
-            }
+        socketio.on("message_to_client", function(data) {
+          addMessage(data);
+        });
+
+        var loaded;
+        socketio.on("init_client", function(data) {
+          if (!loaded) {
+            var ul = document.getElementById('chatlog');
+            var messages = data.messages || [];
+            messages.map(addMessage);
+            loaded = true;
           }
+        });
 
-        </script>
+        function sendMessage(event) {
+          if (!event || event.keyCode ===  13) {
+            var msgElem = document.getElementById("message_input");
+            var username = document.getElementById("username").value;
+            socketio.emit("message_to_server", { 
+              message : msgElem.value, 
+              sentOn: new Date(),
+              username: username 
+            });
+            msgElem.value = '';
+          }
+        }
+
+      </script>
+      <style>
+        * { margin: 0; padding: 0; }
+        body { font: 13px Helvetica, Arial; }
+        form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+        form input { margin: 3px; border: 0; padding: 10px; width: 70%; }
+        form button { background: rgb(130, 224, 255); border: none; padding: 10px; }
+        #chatlog { list-style-type: none; margin: 0; padding: 0; }
+        #chatlog li { padding: 5px 10px; }
+        #chatlog li:nth-child(odd) { background: #eee; }
+      </style>
     </head>
     <body>
-        <label>Username:</label>
-        <input type="text" id="username"/>
-        <label>Message:</label>
-        <input autocomplete="off" onkeypress="sendMessage(event)" type="text" id="message_input"/>
-        <button onclick="sendMessage()">send</button>
-        <div id="chatlog"></div>
+      <div>
+        <ul id="chatlog"></ul>
+        <form action="">
+          <input type="text" id="username" placeholder="Enter username here..."/> 
+          <input autocomplete="off" placeholder="Enter message here ..." onkeypress="sendMessage(event)" id="message_input"/>
+          <button type="button" onclick="sendMessage()">Send</button>
+        </form>
+      </div>
     </body>
 </html>
