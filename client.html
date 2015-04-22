@@ -20,14 +20,10 @@
           addMessage(data);
         });
 
-        var loaded;
         socketio.on("init_client", function(data) {
-          if (!loaded) {
-            var ul = document.getElementById('chatlog');
-            var messages = data.messages || [];
-            messages.map(addMessage);
-            loaded = true;
-          }
+          var ul = document.getElementById('chatlog');
+          var messages = data.messages || [];
+          messages.map(addMessage);
         });
 
         function sendMessage(event) {
