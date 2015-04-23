@@ -1,19 +1,78 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+      <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <style>
+        * { margin: 0; padding: 0; }
+        body { 
+          font: 14px Helvetica, Arial; 
+          background-color: #EEE;
+        }
+        form {
+          padding: 5px;
+          border-top: 1px solid #DDD;
+        }
+        .input-wrapper input { 
+          border-width: 0;
+          padding: 0;
+          margin: 0;
+          width: 100%;
+          outline: none;
+        }
+        .input-wrapper {
+          background-color: #FFF;
+          border: 1px solid #AAA;
+          margin: 5px;
+          padding: 10px;
+          -moz-border-radius: 2px;
+          -webkit-border-radius: 2px;
+          -o-border-radius: 2px;
+          -ms-border-radius: 2px;
+          -khtml-border-radius: 2px;
+          border-radius: 2px;
+        }
+        #chatlog {
+          list-style-type: none; 
+          padding: 3px; 
+          background-color: #FFF;
+        }
+        #chatlog li { 
+          margin: 10px;
+          border: 1px solid #AAA;
+          -moz-border-radius: 4px;
+          -webkit-border-radius: 4px;
+          -o-border-radius: 4px;
+          -ms-border-radius: 4px;
+          -khtml-border-radius: 4px;
+          padding: 5px 10px; 
+          background: #DDD; 
+        }
+      </style>
+    </head>
+    <body id="body">
+      <ul id="chatlog"></ul>
+      <form id="chatform" action="">
+        <div class="input-wrapper">
+          <input type="text" id="username" placeholder="Enter username here..."/>
+        </div>
+        <div class="input-wrapper">
+          <input autocomplete="off" placeholder="Enter message here and press enter ..." onkeypress="sendMessage(event)" id="message_input"/>
+        </div>
+      </form>
       <script src="/socket.io/socket.io.js"></script>
       <script type="text/javascript">
 
         var socketio = io.connect(location.href);
+        var chatlog = document.getElementById("chatlog");
 
         function addMessage(msg) {
-          var chatlog = document.getElementById("chatlog");
           var li = document.createElement('li');
           li.innerHTML = msg.username + ' ('+ msg.sentOn + '): ' + msg.message;
           chatlog.appendChild(li);
-          window.scroll(0, chatlog.scrollHeight);
-          document.getElementById('message_input').focus();
+          var msg = document.getElementById('message_input');
+          msg.scrollIntoView(true);
+          msg.focus();
         }
 
         socketio.on("message_to_client", function(data) {
@@ -21,7 +80,6 @@
         });
 
         socketio.on("init_client", function(data) {
-          var ul = document.getElementById('chatlog');
           var messages = data.messages || [];
           messages.map(addMessage);
         });
@@ -40,37 +98,5 @@
         }
 
       </script>
-      <style>
-        * { margin: 0; padding: 0; }
-        body { font: 13px Helvetica, Arial; }
-        form { 
-          background: #AAA; 
-          padding: 3px; 
-          position: fixed; 
-          bottom: 0; 
-          width: 100%; 
-          height: 80px;
-        }
-        form input { margin: 3px; border: 0; padding: 10px; width: 70%; }
-        form button { background: rgb(130, 224, 255); border: none; padding: 10px; }
-        #chatlog { 
-          list-style-type: none; 
-          padding: 3px; 
-          overflow: auto;
-          margin-bottom: 86px;
-        }
-        #chatlog li { padding: 5px 10px; }
-        #chatlog li:nth-child(odd) { background: #eee; }
-      </style>
-    </head>
-    <body>
-      <div>
-        <ul id="chatlog"></ul>
-        <form action="">
-          <input type="text" id="username" placeholder="Enter username here..."/>
-          <input autocomplete="off" placeholder="Enter message here ..." onkeypress="sendMessage(event)" id="message_input"/>
-          <button type="button" onclick="sendMessage()">Send</button>
-        </form>
-      </div>
     </body>
 </html>
