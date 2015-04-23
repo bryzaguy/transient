@@ -38,15 +38,26 @@
           background-color: #FFF;
         }
         #chatlog li { 
-          margin: 10px;
-          border: 1px solid #AAA;
+          position: relative;
+          margin: 20px;
           -moz-border-radius: 4px;
           -webkit-border-radius: 4px;
           -o-border-radius: 4px;
           -ms-border-radius: 4px;
           -khtml-border-radius: 4px;
           padding: 5px 10px; 
-          background: #DDD; 
+          background: #eee; 
+        }
+        #chatlog li:after {
+          content:"";
+          position:absolute;
+          bottom: -18px;
+          left:30px;
+          border:9px solid transparent;
+          border-top-color:#eee;
+          /* reduce the damage in FF3.0 */
+          display:block;
+          width:0;
         }
       </style>
     </head>
