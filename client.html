@@ -76,7 +76,7 @@
 
           var msgElem = document.getElementById('message_input');
           msgElem.addEventListener('focusout', function(event) {
-            if (msgElem.innerHTML) {
+            if (msgElem.innerText.trim()) {
               var sendBtn = document.getElementById('send-button');
               sendBtn.style.display = 'inherit';
               sendBtn.scrollIntoView(true);
@@ -86,7 +86,7 @@
           msgElem.addEventListener('focusin', function(event) {
             document.getElementById('send-button').style.display = 'none';
             msgElem.scrollIntoView(true);
-          })
+          });
         });
       }
 
