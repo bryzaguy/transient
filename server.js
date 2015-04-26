@@ -1,6 +1,5 @@
 var http = require('http'),
     fs = require('fs'),
-    compass = require('compass'),
     validator = require('validator'),
     messages = [];
 
