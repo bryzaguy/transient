@@ -91,11 +91,13 @@
       }
 
       function addMessage(msg) {
-        var chatlog = document.getElementById("chatlog");
-        var li = document.createElement('li');
+        var chatlog = document.getElementById("chatlog"),
+            li = document.createElement('li');
+            // var = elemPos = document.getElementById('chatform');
         li.className = msg.userId === user.id ? 'you' : 'other';
         li.innerHTML = msg.username + ' ('+ msg.sentOn + '): ' + msg.message;
         chatlog.appendChild(li);
+        // window.scrollTo(0, elemPos);
         document.getElementById('message_input').scrollIntoView(true);
         document.getElementById('message_input').focus();
       }
