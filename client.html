@@ -10,10 +10,15 @@
           background-color: #EEE;
         }
         form {
+          background-color: #EEE;
+          width: 100%;
+          position: fixed;
+          top: 0;
           padding: 5px;
-          border-top: 1px solid #DDD;
+          border: 1px solid #DDD;
         }
-        .input-wrapper input { 
+        .input-wrapper textarea { 
+          font: 14px Helvetica, Arial; 
           border-width: 0;
           padding: 0;
           margin: 0;
@@ -25,6 +30,7 @@
           border: 1px solid #AAA;
           margin: 5px;
           padding: 10px;
+          width: 90%;
           -moz-border-radius: 2px;
           -webkit-border-radius: 2px;
           -o-border-radius: 2px;
@@ -33,6 +39,9 @@
           border-radius: 2px;
         }
         #chatlog {
+          overflow: auto;
+          margin-top: 60px;
+          height: 90%;
           list-style-type: none; 
           padding: 3px; 
           background-color: #FFF;
@@ -55,35 +64,74 @@
           left:30px;
           border:9px solid transparent;
           border-top-color:#eee;
-          /* reduce the damage in FF3.0 */
-          display:block;
+          display: block;
           width:0;
         }
       </style>
     </head>
     <body id="body">
-      <ul id="chatlog"></ul>
-      <form id="chatform" action="">
-        <div class="input-wrapper">
-          <input type="text" id="username" placeholder="Enter username here..."/>
-        </div>
-        <div class="input-wrapper">
-          <input autocomplete="off" placeholder="Enter message here and press enter ..." onkeypress="sendMessage(event)" id="message_input"/>
-        </div>
-      </form>
       <script src="/socket.io/socket.io.js"></script>
-      <script type="text/javascript">
+      <script>
+        //FACEBOOK LOGIN
+        function statusChangeCallback(response) {
+          console.log('statusChangeCallback');
+          console.log(response);
+          if (response.status === 'connected') {
+            testAPI();
+          } else if (response.status === 'not_authorized') {
+            document.getElementById('status').innerHTML = 'Please log ' +
+              'into this app.';
+          } else {
+            document.getElementById('status').innerHTML = 'Please log ' +
+              'into Facebook.';
+          }
+        }
+
+        function checkLoginState() {
+          FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+          });
+        }
+
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId: '888594721196546',
+            cookie: true,
+            xfbml: true,
+            version: 'v2.3'
+          });
+
+          FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+          });
+        };
+
+        (function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_US/sdk.js";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        function testAPI() {
+          document.getElementById('status').innerHTML = 'Fetching your information.... ';
+          FB.api('/me', function(response) {
+            console.log('Successful login for: ' + response.name);
+            document.getElementById('status').innerHTML =
+              'Thanks for logging in, ' + response.name + '!';
+          });
+        }
 
         var socketio = io.connect(location.href);
-        var chatlog = document.getElementById("chatlog");
 
         function addMessage(msg) {
+          var chatlog = document.getElementById("chatlog");
           var li = document.createElement('li');
           li.innerHTML = msg.username + ' ('+ msg.sentOn + '): ' + msg.message;
           chatlog.appendChild(li);
-          var msg = document.getElementById('message_input');
-          msg.scrollIntoView(true);
-          msg.focus();
+          li.scrollIntoView(true);
+          document.getElementById('message_input').focus();
         }
 
         socketio.on("message_to_client", function(data) {
@@ -97,17 +145,30 @@
 
         function sendMessage(event) {
           if (!event || event.keyCode ===  13) {
+            event.preventDefault();
             var msgElem = document.getElementById("message_input");
-            var username = document.getElementById("username").value;
             socketio.emit("message_to_server", { 
               message : msgElem.value, 
               sentOn: new Date(),
-              username: username 
+              username: 'username' 
             });
             msgElem.value = '';
           }
         }
 
       </script>
+      <div id="fb-root"></div>
+
+      <fb:login-button scope="public_profile,email" size="xlarge" onlogin="checkLoginState();">
+      </fb:login-button>
+
+      <div id="status"></div>
+      <ul id="chatlog"></ul>
+      <input id="focushere" style="display:none" />
+      <form id="chatform" action="">
+        <div class="input-wrapper">
+          <textarea placeholder="Enter message here and press enter ..." onkeypress="sendMessage(event)" id="message_input"></textarea>
+        </div>
+      </form>
     </body>
 </html>
