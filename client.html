@@ -3,103 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <style>
-      * { margin: 0; padding: 0; }
-      body { 
-        font: 16px Helvetica, Arial; 
-        background-color: #EEE;
-      }
-      form button {
-        font: 16px Helvetica, Arial; 
-        font-weight: 600;
-        margin: 5px;
-        padding: 10px;
-        width: 100%;
-        outline: none;
-        border: transparent;
-        background-color: transparent;
-      }
-      form {
-        background-color: #EEE;/*
-        position: fixed;
-        bottom: 0;*/
-        padding: 5px;
-        border-top: 1px solid #DDD;
-      }
-      .button-wrapper {
-        background: #FF8E8E;
-        border: 1px solid #000;
-        margin: 5px;
-        -moz-border-radius: 2px;
-        -webkit-border-radius: 2px;
-        -o-border-radius: 2px;
-        -ms-border-radius: 2px;
-        -khtml-border-radius: 2px;
-        border-radius: 2px;
-      }
-      .input-wrapper {
-        outline: none;
-        border: 1px solid #AAA;
-        margin: 5px;
-        padding: 10px;
-        -moz-border-radius: 2px;
-        -webkit-border-radius: 2px;
-        -o-border-radius: 2px;
-        -ms-border-radius: 2px;
-        -khtml-border-radius: 2px;
-        border-radius: 2px;
-        background: #FFF;
-      }
-      #chatlog {/*
-        overflow: auto;
-        margin-bottom: 60px;
-        height: 90%;*/
-        list-style-type: none; 
-        padding: 3px; 
-        background-color: #FFF;
-      }
-      .login {
-        height: 100px;
-        margin-top: -100px;
-        position: absolute;
-
-        text-align: center;
-        top: 50%;
-        width: 100%;
-      }
-      #chatlog li { 
-        position: relative;
-        margin: 20px;
-        -moz-border-radius: 4px;
-        -webkit-border-radius: 4px;
-        -o-border-radius: 4px;
-        -ms-border-radius: 4px;
-        -khtml-border-radius: 4px;
-        padding: 5px 10px; 
-      }
-      .you {
-        background: #BBDAFF;
-      }
-      .other {
-        background: #eee;
-      }
-      #chatlog li:after {
-        content:"";
-        position:absolute;
-        bottom: -18px;
-        border:9px solid transparent;
-        display: block;
-        width:0;
-      }
-      #chatlog li.other:after {
-        left:30px;
-        border-top-color:#eee;
-      }
-      #chatlog li.you:after {
-        right:30px;
-        border-top-color:#BBDAFF;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/app.css">
   </head>
   <body id="body">
     <script src="/socket.io/socket.io.js"></script>
@@ -209,7 +113,9 @@
       }
 
     </script>
+    
     <div id="fb-root"></div>
+
     <div id="login" class="login">
       <h2>Welcome to Transient</h2>
       <p>Minimal social :)</p>
@@ -218,6 +124,7 @@
       </fb:login-button>
       <div id="status"></div>
     </div>
+
     <div id="chat" style="display: none;">
       <ul id="chatlog"></ul>
       <form id="chatform" action="">

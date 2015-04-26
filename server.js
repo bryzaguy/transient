@@ -1,16 +1,29 @@
 var http = require('http'),
-  fs = require('fs'),
-  validator = require('validator'),
-  messages = [];
+    fs = require('fs'),
+    compass = require('compass'),
+    validator = require('validator'),
+    messages = [];
 
 var app = http.createServer(function (request, response) {
-  fs.readFile("client.html", 'utf-8', function (error, data) {
-    response.writeHead(200, {
-      'Content-Type': 'text/html'
+  
+  if(request.url === '/css/app.css') {
+    fs.readFile("css/app.css", 'utf-8', function (error, data) {
+      response.writeHead(200, {
+        'Content-Type': 'text/css'
+      });
+      response.write(data);
+      response.end();
     });
-    response.write(data);
-    response.end();
-  });
+  } else  {
+    fs.readFile("client.html", 'utf-8', function (error, data) {
+      response.writeHead(200, {
+        'Content-Type': 'text/html'
+      });
+      response.write(data);
+      response.end();
+    });
+  }
+
 }).listen(process.env.PORT || 1337);
 
 var io = require('socket.io').listen(app);
