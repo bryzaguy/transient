@@ -1,6 +1,6 @@
 @import "compass";
 
-body { 
+body {
   margin: 0;
   font: 16px Helvetica, Arial; 
   background-color: #EEE;
@@ -19,37 +19,42 @@ body {
 
   @include border-radius(2px);
 
-  margin: 5px;
+  /*
+  position: fixed;
+  bottom: 0;*/
+
+  margin-top: 5px;
+  padding: 5px;
   background: #FF8E8E;
   border: 1px solid #000;
 
-  #send-button {
-
-    /*
-    position: fixed;
-    bottom: 0;*/
-
-    padding: 5px;
-    background-color: #EEE;
-    border-top: 1px solid #DDD;
-
-    button {
-      width: 100%;
-      margin: 5px;
-      padding: 10px;
-      font: 16px Helvetica, Arial; 
-      font-weight: 600;
-      background-color: transparent;
-      border: transparent;
-      outline: none;
-    }
+  button {
+    width: 100%;
+    margin: 5px;
+    font: 16px Helvetica, Arial; 
+    font-weight: 600;
+    background-color: transparent;
+    border: transparent;
+    outline: none;
   }
 }
+
+#chatform {
+
+  @include box-sizing(border-box);
+
+  position: absolute;
+  width: 100%;
+  padding: 5px;
+  bottom: 0;
+}
+
 .input-wrapper {
 
+  @include box-sizing(border-box);
   @include border-radius(2px);
 
-  margin: 5px;
+  width: 100%;
   padding: 10px;
   background: #FFF;
   border: 1px solid #AAA;
@@ -57,12 +62,9 @@ body {
 }
 
 #chatlog {
-
-  /*
   overflow: auto;
-  margin-bottom: 60px;
-  height: 90%;*/
   margin-top: 0;
+  margin-bottom: 60px;
   padding: 3px; 
   list-style-type: none;
   background-color: #FFF;
