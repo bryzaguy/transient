@@ -1,174 +1,242 @@
 <!DOCTYPE html>
 <html>
-    <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-      <meta name="apple-mobile-web-app-capable" content="yes">
-      <style>
-        * { margin: 0; padding: 0; }
-        body { 
-          font: 14px Helvetica, Arial; 
-          background-color: #EEE;
-        }
-        form {
-          background-color: #EEE;
-          width: 100%;
-          position: fixed;
-          top: 0;
-          padding: 5px;
-          border: 1px solid #DDD;
-        }
-        .input-wrapper textarea { 
-          font: 14px Helvetica, Arial; 
-          border-width: 0;
-          padding: 0;
-          margin: 0;
-          width: 100%;
-          outline: none;
-        }
-        .input-wrapper {
-          background-color: #FFF;
-          border: 1px solid #AAA;
-          margin: 5px;
-          padding: 10px;
-          width: 90%;
-          -moz-border-radius: 2px;
-          -webkit-border-radius: 2px;
-          -o-border-radius: 2px;
-          -ms-border-radius: 2px;
-          -khtml-border-radius: 2px;
-          border-radius: 2px;
-        }
-        #chatlog {
-          overflow: auto;
-          margin-top: 60px;
-          height: 90%;
-          list-style-type: none; 
-          padding: 3px; 
-          background-color: #FFF;
-        }
-        #chatlog li { 
-          position: relative;
-          margin: 20px;
-          -moz-border-radius: 4px;
-          -webkit-border-radius: 4px;
-          -o-border-radius: 4px;
-          -ms-border-radius: 4px;
-          -khtml-border-radius: 4px;
-          padding: 5px 10px; 
-          background: #eee; 
-        }
-        #chatlog li:after {
-          content:"";
-          position:absolute;
-          bottom: -18px;
-          left:30px;
-          border:9px solid transparent;
-          border-top-color:#eee;
-          display: block;
-          width:0;
-        }
-      </style>
-    </head>
-    <body id="body">
-      <script src="/socket.io/socket.io.js"></script>
-      <script>
-        //FACEBOOK LOGIN
-        function statusChangeCallback(response) {
-          console.log('statusChangeCallback');
-          console.log(response);
-          if (response.status === 'connected') {
-            testAPI();
-          } else if (response.status === 'not_authorized') {
-            document.getElementById('status').innerHTML = 'Please log ' +
-              'into this app.';
-          } else {
-            document.getElementById('status').innerHTML = 'Please log ' +
-              'into Facebook.';
-          }
-        }
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <style>
+      * { margin: 0; padding: 0; }
+      body { 
+        font: 16px Helvetica, Arial; 
+        background-color: #EEE;
+      }
+      form button {
+        font: 16px Helvetica, Arial; 
+        color: #FFF;
+        font-weight: 600;
+        margin: 5px;
+        padding: 10px;
+        width: 100%;
+        outline: none;
+        border: transparent;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        -o-border-radius: 2px;
+        -ms-border-radius: 2px;
+        -khtml-border-radius: 2px;
+        border-radius: 2px;
+        background-color: transparent;
+      }
+      form {
+        background-color: #EEE;/*
+        position: fixed;
+        bottom: 0;*/
+        padding: 5px;
+        border-top: 1px solid #DDD;
+      }
+      .button-wrapper {
+        background: #FF8E8E;
+        border: 1px solid #000;
+        margin: 5px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        -o-border-radius: 2px;
+        -ms-border-radius: 2px;
+        -khtml-border-radius: 2px;
+        border-radius: 2px;
+      }
+      .input-wrapper {
+        outline: none;
+        border: 1px solid #AAA;
+        margin: 5px;
+        padding: 10px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        -o-border-radius: 2px;
+        -ms-border-radius: 2px;
+        -khtml-border-radius: 2px;
+        border-radius: 2px;
+        background: #FFF;
+      }
+      #chatlog {/*
+        overflow: auto;
+        margin-bottom: 60px;
+        height: 90%;*/
+        list-style-type: none; 
+        padding: 3px; 
+        background-color: #FFF;
+      }
+      .login {
+        height: 100px;
+        margin-top: -100px;
+        position: absolute;
 
-        function checkLoginState() {
-          FB.getLoginStatus(function(response) {
-            statusChangeCallback(response);
-          });
+        text-align: center;
+        top: 50%;
+        width: 100%;
+      }
+      #chatlog li { 
+        position: relative;
+        margin: 20px;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -o-border-radius: 4px;
+        -ms-border-radius: 4px;
+        -khtml-border-radius: 4px;
+        padding: 5px 10px; 
+      }
+      .you {
+        background: #BBDAFF;
+      }
+      .other {
+        background: #eee;
+      }
+      #chatlog li:after {
+        content:"";
+        position:absolute;
+        bottom: -18px;
+        border:9px solid transparent;
+        display: block;
+        width:0;
+      }
+      #chatlog li.other:after {
+        left:30px;
+        border-top-color:#eee;
+      }
+      #chatlog li.you:after {
+        right:30px;
+        border-top-color:#BBDAFF;
+      }
+    </style>
+  </head>
+  <body id="body">
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      function statusChangeCallback(response) {
+        if (response.status === 'connected') {
+          getUserFromAPI();
+        } else if (response.status === 'not_authorized') {
+          document.getElementById('status').innerHTML = 'Please log ' +
+            'into this app.';
+        } else {
+          document.getElementById('status').innerHTML = 'Please log ' +
+            'into Facebook.';
         }
+      }
 
-        window.fbAsyncInit = function() {
-          FB.init({
-            appId: '888594721196546',
-            cookie: true,
-            xfbml: true,
-            version: 'v2.3'
-          });
+      function checkLoginState() {
+        FB.getLoginStatus(function(response) {
+          statusChangeCallback(response);
+        });
+      }
 
-          FB.getLoginStatus(function(response) {
-            statusChangeCallback(response);
-          });
-        };
+      var appId = '888594721196546';
+      if (window.location.href.indexOf('localhost') > -1) {
+        appId = '888596744529677';
+      }
 
-        (function(d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0];
-          if (d.getElementById(id)) return;
-          js = d.createElement(s); js.id = id;
-          js.src = "//connect.facebook.net/en_US/sdk.js";
-          fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId: appId,
+          cookie: true,
+          xfbml: true,
+          version: 'v2.3'
+        });
 
-        function testAPI() {
+        FB.getLoginStatus(function(response) {
+          statusChangeCallback(response);
+        });
+      };
+
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+
+      var user, socketio;
+      function getUserFromAPI() {
+        document.getElementById('status').innerHTML = 'Fetching your information.... ';
+        FB.api('/me', function(response) {
+          user = response;
+
           document.getElementById('status').innerHTML = 'Fetching your information.... ';
-          FB.api('/me', function(response) {
-            console.log('Successful login for: ' + response.name);
-            document.getElementById('status').innerHTML =
-              'Thanks for logging in, ' + response.name + '!';
+
+          socketio = io.connect(location.href);
+
+          socketio.on("message_to_client", function(data) {
+            addMessage(data);
           });
-        }
 
-        var socketio = io.connect(location.href);
+          socketio.on("init_client", function(data) {
+            var messages = data.messages || [];
+            messages.map(addMessage);
+          });
 
-        function addMessage(msg) {
-          var chatlog = document.getElementById("chatlog");
-          var li = document.createElement('li');
-          li.innerHTML = msg.username + ' ('+ msg.sentOn + '): ' + msg.message;
-          chatlog.appendChild(li);
-          li.scrollIntoView(true);
-          document.getElementById('message_input').focus();
-        }
+          document.getElementById('chat').style.display = 'inherit';
+          document.getElementById('login').style.display = 'none';
 
-        socketio.on("message_to_client", function(data) {
-          addMessage(data);
+          var msgElem = document.getElementById('message_input');
+          msgElem.addEventListener('focusout', function(event) {
+            if (msgElem.innerHTML) {
+              var sendBtn = document.getElementById('send-button');
+              sendBtn.style.display = 'inherit';
+              sendBtn.scrollIntoView(true);
+            }
+          });
+
+          msgElem.addEventListener('focusin', function(event) {
+            document.getElementById('send-button').style.display = 'none';
+            msgElem.scrollIntoView(true);
+          })
         });
+      }
 
-        socketio.on("init_client", function(data) {
-          var messages = data.messages || [];
-          messages.map(addMessage);
+      function addMessage(msg) {
+        var chatlog = document.getElementById("chatlog");
+        var li = document.createElement('li');
+        li.className = msg.userId === user.id ? 'you' : 'other';
+        li.innerHTML = msg.username + ' ('+ msg.sentOn + '): ' + msg.message;
+        chatlog.appendChild(li);
+        document.getElementById('message_input').scrollIntoView(true);
+        document.getElementById('message_input').focus();
+      }
+
+      function sendMessage(event) {
+        event.preventDefault();
+        var msgElem = document.getElementById("message_input");
+        socketio.emit("message_to_server", { 
+          message : msgElem.innerHTML, 
+          sentOn: new Date(),
+          username: user.name,
+          userId: user.id 
         });
+        msgElem.innerHTML = '';
+      }
 
-        function sendMessage(event) {
-          if (!event || event.keyCode ===  13) {
-            event.preventDefault();
-            var msgElem = document.getElementById("message_input");
-            socketio.emit("message_to_server", { 
-              message : msgElem.value, 
-              sentOn: new Date(),
-              username: 'username' 
-            });
-            msgElem.value = '';
-          }
-        }
-
-      </script>
-      <div id="fb-root"></div>
-
+    </script>
+    <div id="fb-root"></div>
+    <div id="login" class="login">
+      <h2>Welcome to Transient</h2>
+      <p>Minimal social :)</p>
+      <br>
       <fb:login-button scope="public_profile,email" size="xlarge" onlogin="checkLoginState();">
       </fb:login-button>
-
       <div id="status"></div>
+    </div>
+    <div id="chat" style="display: none;">
       <ul id="chatlog"></ul>
-      <input id="focushere" style="display:none" />
       <form id="chatform" action="">
-        <div class="input-wrapper">
-          <textarea placeholder="Enter message here and press enter ..." onkeypress="sendMessage(event)" id="message_input"></textarea>
+        <div id="message_input" 
+             class="input-wrapper" 
+             contentEditable="true" 
+             onkeypress="if (event.keyCode === 13) sendMessage(event)"></div>
+        <div id="send-button" style="display: none;" class="button-wrapper">
+          <button type="submit" onclick="sendMessage(event)">Send</button>
         </div>
       </form>
-    </body>
+    </div>
+
+  </body>
 </html>

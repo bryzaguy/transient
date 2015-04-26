@@ -26,7 +26,8 @@ io.sockets.on('connection', function (socket) {
     var message = {
       message: escaped_message,
       sentOn: validator.escape(data.sentOn) || new Date(),
-      username: validator.escape(data.username) || 'anonymous-' + socket.handshake.address
+      username: validator.escape(data.username),
+      userId: validator.escape(data.userId)
     };
     messages.push(message);
     io.sockets.emit("message_to_client", message);
