@@ -104,12 +104,12 @@
         event.preventDefault();
         var msgElem = document.getElementById("message_input");
         socketio.emit("message_to_server", { 
-          message : msgElem.innerHTML, 
+          message : msgElem.innerText, 
           sentOn: new Date(),
           username: user.name,
           userId: user.id 
         });
-        msgElem.innerHTML = '';
+        msgElem.innerText = '';
       }
 
     </script>
@@ -131,7 +131,8 @@
         <div id="message_input" 
              class="input-wrapper" 
              contentEditable="true" 
-             onkeypress="if (event.keyCode === 13) sendMessage(event)"></div>
+             onkeypress="if (event.keyCode === 13) sendMessage(event)">
+        </div>
         <div id="send-button" style="display: none;" class="button-wrapper">
           <button type="submit" onclick="sendMessage(event)">Send</button>
         </div>
