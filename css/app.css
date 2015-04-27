@@ -49,9 +49,10 @@ body {
   width: 100%;
   padding: 5px;
   background: #EEE;
+  border-top: 1px solid #DDD;
 }
 
-/* line 53, ../scss/app.scss */
+/* line 54, ../scss/app.scss */
 .input-wrapper {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -66,16 +67,16 @@ body {
   outline: none;
 }
 
-/* line 65, ../scss/app.scss */
+/* line 66, ../scss/app.scss */
 #chatlog {
   overflow: auto;
   margin-top: 0;
-  margin-bottom: 60px;
+  margin-bottom: 50px;
   padding: 3px;
   list-style-type: none;
   background-color: #FFF;
 }
-/* line 73, ../scss/app.scss */
+/* line 74, ../scss/app.scss */
 #chatlog li {
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
@@ -84,7 +85,7 @@ body {
   margin: 20px;
   padding: 5px 10px;
 }
-/* line 81, ../scss/app.scss */
+/* line 82, ../scss/app.scss */
 #chatlog li:after {
   display: block;
   position: absolute;
@@ -93,21 +94,21 @@ body {
   content: "";
   border: 9px solid transparent;
 }
-/* line 90, ../scss/app.scss */
+/* line 91, ../scss/app.scss */
 #chatlog li.other:after {
   left: 30px;
   border-top-color: #eee;
 }
-/* line 95, ../scss/app.scss */
+/* line 96, ../scss/app.scss */
 #chatlog li.you:after {
   right: 30px;
   border-top-color: #BBDAFF;
 }
-/* line 100, ../scss/app.scss */
+/* line 101, ../scss/app.scss */
 #chatlog li.you {
   background-color: #BBDAFF;
 }
-/* line 104, ../scss/app.scss */
+/* line 105, ../scss/app.scss */
 #chatlog li.other {
   background-color: #eee;
 }
