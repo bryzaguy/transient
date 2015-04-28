@@ -13,6 +13,14 @@ var app = http.createServer(function (request, response) {
       response.write(data);
       response.end();
     });
+  } else if (request.url === '/main.js') {
+    fs.readFile("main.js", 'utf-8', function (error, data) {
+      response.writeHead(200, {
+        'Content-Type': 'text/javascript'
+      });
+      response.write(data);
+      response.end();
+    });
   } else {
     fs.readFile("client.html", 'utf-8', function (error, data) {
       response.writeHead(200, {
