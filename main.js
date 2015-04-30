@@ -175,6 +175,7 @@ var Chat = React.createClass({
       this.setState({
         messages: messages
       });
+	  window.scrollTo(0, document.body.scrollHeight);
     }.bind(this));
 
     socketio.on('user left', function (data) {
