@@ -32,3 +32,7 @@ function handleTyping(e) {
     socketio.emit('stop typing');
   }, 2000);
 }
+
+function scrollToBottom() {
+  window.scrollTo(0, document.body.scrollHeight);
+}
