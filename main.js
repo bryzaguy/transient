@@ -1,3 +1,4 @@
+/* jslint node: true, jsx: true */
 'use strict';
 
 var React = require('react');
@@ -57,9 +58,12 @@ var Login = React.createClass({
     this.updateStatus('Fetching your information...');
     FB.api('/me', function (user) {
       FB.api('/me/friends', function (friends) {
-        this.updateStatus('Success!');
-        user.friends = friends;
-        this.props.setUser(user);
+        FB.api('/me/picture', function (picture) {
+          this.updateStatus('Success!');
+          user.friends = friends;
+          user.picture = picture.data.url;
+          this.props.setUser(user);
+        }.bind(this));
       }.bind(this));
     }.bind(this));
   },
@@ -113,6 +117,7 @@ var Message = React.createClass({
     var message = this.props.message;
     return (
       <li className={this.props.isUser ? 'you' : 'other'}>
+      <img style={{height:'35px'}} src={message.picture} />
       <span><strong>{message.username}</strong></span>
       <h5><FormattedRelative value={message.sentOn} /></h5>
       <p>{message.message}</p>
@@ -191,6 +196,7 @@ var Chat = React.createClass({
       message: msgElem.innerText,
       sentOn: new Date(),
       username: user.name,
+      picture: user.picture,
       userId: user.id
     });
 
