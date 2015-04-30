@@ -3,39 +3,11 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" type="text/css" href="css/app.css">
   </head>
   <body id="body">
+    <div id="chat"></div>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="/main.js"></script>
-    
+    <script src="/bundle.js"></script>
     <div id="fb-root"></div>
-
-    <div id="login" class="login">
-      <h2>Welcome to Transient</h2>
-      <p>Minimal social :)</p>
-      <br>
-      <fb:login-button scope="public_profile,email" size="xlarge" onlogin="checkLoginState();">
-      </fb:login-button>
-      <p>
-        <div id="status"></div>
-      </p>
-    </div>
-
-    <div id="chat" style="display: none;">
-      <ul id="chatlog"></ul>
-      <form id="chatform" action="">
-        <div id="userstatus"></div>
-        <div id="message_input" 
-             class="input-wrapper" 
-             contentEditable="true" 
-             onkeypress="handleTyping(event)">
-        </div>
-        <div id="send-button" style="display: none;" class="button-wrapper">
-          <button type="submit" onclick="sendMessage(event)">Send</button>
-        </div>
-      </form>
-    </div>
-
   </body>
 </html>

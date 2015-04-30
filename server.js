@@ -1,20 +1,10 @@
 var http = require('http'),
   fs = require('fs'),
-  validator = require('validator'),
   messages = [];
 
 var app = http.createServer(function (request, response) {
-
-  if (request.url === '/css/app.css') {
-    fs.readFile("css/app.css", 'utf-8', function (error, data) {
-      response.writeHead(200, {
-        'Content-Type': 'text/css'
-      });
-      response.write(data);
-      response.end();
-    });
-  } else if (request.url === '/main.js') {
-    fs.readFile("main.js", 'utf-8', function (error, data) {
+  if (request.url === '/bundle.js') {
+    fs.readFile("build/bundle.js", 'utf-8', function (error, data) {
       response.writeHead(200, {
         'Content-Type': 'text/javascript'
       });
@@ -49,15 +39,8 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('message_to_server', function (data) {
-    var escaped_message = validator.escape(data.message);
-    var message = {
-      message: escaped_message,
-      sentOn: validator.escape(data.sentOn) || new Date(),
-      username: validator.escape(data.username),
-      userId: validator.escape(data.userId)
-    };
-    messages.push(message);
-    io.sockets.emit("message_to_client", message);
+    messages.push(data);
+    io.sockets.emit("message_to_client", data);
   });
 
   socket.on('typing', function () {
