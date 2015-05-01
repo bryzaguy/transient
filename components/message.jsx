@@ -31,7 +31,7 @@ module.exports = React.createClass({
     var isFirst = this.props.isFirstMessage;
     var isLast = this.props.isLastMessage;
     var className = this.props.isUser ? 'you' : 'other';
-    var firstImg = (<img style={{height:'35px'}} src={message.picture} />);
+    var firstImg = (<img src={message.picture} />);
     var firstUsername = (<span><strong>{message.username}</strong></span>);
 
     className += isLast ? ' last-message' : '';
