@@ -91,7 +91,7 @@ body {
 
     border-radius: 4px;
     position: relative;
-    margin: 5px 5px 15px 5px;
+    margin: 5px 5px 5px 5px;
     padding: 5px 10px; 
 
     h5 {
@@ -112,6 +112,19 @@ body {
       margin: 10px 0 5px 0;
     }
 
+    &.you {
+      background-color: #BBDAFF;
+    }
+
+    &.other {
+      background-color: #eee;
+    }
+
+  }
+
+  .last-message {
+    margin: 5px 5px 15px 5px;
+
     &:after {
       display: block;
       position:absolute;
@@ -120,7 +133,7 @@ body {
       content:"";
       border:9px solid transparent;
     }
-
+    
     &.other:after {
       left:30px;
       border-top-color:#eee;
@@ -129,14 +142,6 @@ body {
     &.you:after {
       right:30px;
       border-top-color:#BBDAFF;
-    }
-
-    &.you {
-      background-color: #BBDAFF;
-    }
-
-    &.other {
-      background-color: #eee;
     }
 
   }

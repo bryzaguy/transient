@@ -96,7 +96,14 @@ module.exports = React.createClass({
     var messages = this.state.messages;
     var user = this.props.user;
     var chatMessages = messages.map(function (msg, index) {
-      return <Message message={msg} isUser={msg.userId === user.id} key={index} />;
+      var isLast = (messages[index + 1] || {}).userId !== msg.userId;
+      var isFirst = (messages[index - 1] || {}).userId !== msg.userId;
+      return (<Message 
+        message={msg} 
+        isUser={msg.userId === user.id} 
+        isLastMessage={isLast}
+        isFirstMessage={isFirst}
+        key={index} />);
     });
     var statusHidden = {
       display: 'none'

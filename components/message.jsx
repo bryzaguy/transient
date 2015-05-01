@@ -28,10 +28,16 @@ module.exports = React.createClass({
   },
   render: function () {
     var message = this.props.message;
+    var isFirst = this.props.isFirstMessage;
+    var className = this.props.isUser ? 'you' : 'other';
+    var firstImg = (<img style={{height:'35px'}} src={message.picture} />);
+    var firstUsername = (<span><strong>{message.username}</strong></span>);
+
+    className += this.props.isLastMessage ? ' last-message' : '';
     return (
-      <li className={this.props.isUser ? 'you' : 'other'}>
-      <img style={{height:'35px'}} src={message.picture} />
-      <span><strong>{message.username}</strong></span>
+      <li className={className}>
+      {isFirst ? firstImg : null}
+      {isFirst ? firstUsername : null} 
       <h5><FormattedRelative value={message.sentOn} /></h5>
       <p>{message.message}</p>
     </li>
