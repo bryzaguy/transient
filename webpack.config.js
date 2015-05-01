@@ -21,5 +21,7 @@ module.exports = [{
       loader: "jsx-loader"
     }]
   },
-  plugins: []
+  plugins: [
+    new webpack.NoErrorsPlugin()
+  ]
 }];
