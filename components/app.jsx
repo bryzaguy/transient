@@ -8,13 +8,9 @@ var Chat = require('./chat.jsx');
 
 module.exports = React.createClass({
   getInitialState: function () {
-    return {};
-  },
-  componentDidMount: function () {
-    var user = JSON.parse(localStorage.facebookUser || '');
-    if (user) {
-      this.setUser(user);
-    }
+    return {
+      user: JSON.parse(localStorage.facebookUser || '')
+    };
   },
   setUser: function (user) {
     localStorage.facebookUser = JSON.stringify(user);
