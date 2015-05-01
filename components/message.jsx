@@ -39,8 +39,9 @@ module.exports = React.createClass({
       <li className={className}>
       {isFirst ? firstImg : null}
       {isFirst ? firstUsername : null} 
-      {isFirst || isLast ? <h5><FormattedRelative value={message.sentOn} /></h5> : ''} 
+      {isFirst ? <h5><FormattedRelative value={message.sentOn} /></h5> : ''} 
       <p>{message.message}</p>
+      {isLast && !isFirst ? <h5><FormattedRelative value={message.sentOn} /></h5> : ''} 
     </li>
     );
   }
