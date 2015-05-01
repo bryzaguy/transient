@@ -17,7 +17,7 @@ module.exports = [{
         "sass-loader"
       ],
     }, {
-      test: /\.js$/,
+      test: /\.(js|jsx)$/,
       loader: "jsx-loader"
     }]
   },

@@ -1,6 +1,36 @@
+/* jshint node: true */
 /** @jsx React.DOM */
+'use strict';
 
-var React = require('react');
+var React = require('react'),
+    Message = require('./message.jsx'),
+    socketio = io.connect(location.href),
+    statusReset,
+    typing;
+
+function log(message) {
+  if (statusReset) {
+    clearTimeout(statusReset);
+  }
+  var status = document.getElementById('userstatus');
+  status.innerHTML = message;
+  status.style.display = 'inherit';
+  statusReset = setTimeout(function () {
+    status.style.display = 'none';
+  }, 1000);
+}
+
+function handleTyping(e) {
+  clearTimeout(typing);
+  socketio.emit('typing');
+  typing = setTimeout(function () {
+    socketio.emit('stop typing');
+  }, 2000);
+}
+
+function scrollToBottom() {
+  window.scrollTo(0, document.body.scrollHeight);
+}
 
 module.exports = React.createClass({
   getInitialState: function () {
