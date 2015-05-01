@@ -103,13 +103,11 @@ body {
 
     img {
       float: left;
-      height: 30px;
-      padding-right: 10px;
-      padding-top: 2px;
+      padding: 2px 10px 2px 0px;
     }
 
     p {
-      margin: 10px 0 5px 0;
+      margin: 0;
     }
 
     &.you {
@@ -133,7 +131,7 @@ body {
       content:"";
       border:9px solid transparent;
     }
-    
+
     &.other:after {
       left:30px;
       border-top-color:#eee;

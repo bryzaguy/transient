@@ -54,10 +54,10 @@
 /******/ 		
 
 /******/ 	
-/******/ 	/*global "e004e313ad6c0d5115bd" installedModules __webpack_require__ hotDownloadManifest hotDownloadUpdateChunk modules */
+/******/ 	/*global "96bd8c07140c54dc87be" installedModules __webpack_require__ hotDownloadManifest hotDownloadUpdateChunk modules */
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "e004e313ad6c0d5115bd"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "96bd8c07140c54dc87be"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -677,16 +677,17 @@
 	  render: function () {
 	    var message = this.props.message;
 	    var isFirst = this.props.isFirstMessage;
+	    var isLast = this.props.isLastMessage;
 	    var className = this.props.isUser ? 'you' : 'other';
 	    var firstImg = (React.createElement("img", {style: {height:'35px'}, src: message.picture}));
 	    var firstUsername = (React.createElement("span", null, React.createElement("strong", null, message.username)));
 
-	    className += this.props.isLastMessage ? ' last-message' : '';
+	    className += isLast ? ' last-message' : '';
 	    return (
 	      React.createElement("li", {className: className}, 
 	      isFirst ? firstImg : null, 
 	      isFirst ? firstUsername : null, 
-	      React.createElement("h5", null, React.createElement(FormattedRelative, {value: message.sentOn})), 
+	      isFirst || isLast ? React.createElement("h5", null, React.createElement(FormattedRelative, {value: message.sentOn})) : '', 
 	      React.createElement("p", null, message.message)
 	    )
 	    );
@@ -904,7 +905,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(12)();
-	exports.push([module.id, "body {\n  margin: 0;\n  font: 15px Helvetica, Arial;\n  background-color: #EEE; }\n\n.login {\n  position: absolute;\n  top: 50%;\n  width: 100%;\n  height: 100px;\n  margin-top: -100px;\n  text-align: center; }\n\n#userstatus {\n  padding: 3px; }\n\n.facebook-login {\n  padding: 10px;\n  border: none;\n  border-radius: 4px;\n  color: white;\n  font-family: \"Merriweather Sans\", sans-serif;\n  font-size: 16px;\n  width: 205px;\n  text-shadow: rgba(0, 0, 0, 0.2) -1px -1px 0;\n  background: -webkit-linear-gradient(top, #4c74c4, #3b5998);\n  background: linear-gradient(to bottom, #4c74c4, #3b5998); }\n  .facebook-login:active {\n    background: #3b5998; }\n\n.button-wrapper {\n  border: none;\n  padding: 4px;\n  border-radius: 4px;\n  position: absolute;\n  width: 60px;\n  bottom: 5px;\n  right: 5px;\n  background: -webkit-linear-gradient(top, #FF8E8E, #FF3333);\n  background: linear-gradient(to bottom, #FF8E8E, #FF3333); }\n  .button-wrapper:active {\n    background: #FF3333; }\n  .button-wrapper button {\n    padding: 0px;\n    margin: 0px;\n    width: 100%;\n    font: 15px Helvetica, Arial;\n    color: white;\n    text-shadow: rgba(0, 0, 0, 0.2) -1px -1px 0;\n    background-color: transparent;\n    border: transparent;\n    outline: none; }\n\n#chatform {\n  box-sizing: border-box;\n  position: fixed;\n  bottom: 0;\n  width: 100%;\n  padding: 5px;\n  background: #EEE;\n  border-top: 1px solid #DDD; }\n\n.input-wrapper {\n  box-sizing: border-box;\n  border-radius: 2px;\n  float: left;\n  width: calc(100% - 72px);\n  padding: 3px;\n  background: #FFF;\n  border: 1px solid #AAA;\n  outline: none; }\n\n#chatlog {\n  margin-top: 0;\n  margin-bottom: 30px;\n  padding: 3px;\n  list-style-type: none;\n  background-color: #FFF; }\n  #chatlog li {\n    border-radius: 4px;\n    position: relative;\n    margin: 5px 5px 5px 5px;\n    padding: 5px 10px; }\n    #chatlog li h5 {\n      margin: 2px;\n      padding: 0px;\n      font-weight: 100;\n      color: #555; }\n    #chatlog li img {\n      float: left;\n      height: 30px;\n      padding-right: 10px;\n      padding-top: 2px; }\n    #chatlog li p {\n      margin: 10px 0 5px 0; }\n    #chatlog li.you {\n      background-color: #BBDAFF; }\n    #chatlog li.other {\n      background-color: #eee; }\n  #chatlog .last-message {\n    margin: 5px 5px 15px 5px; }\n    #chatlog .last-message:after {\n      display: block;\n      position: absolute;\n      bottom: -18px;\n      width: 0;\n      content: \"\";\n      border: 9px solid transparent; }\n    #chatlog .last-message.other:after {\n      left: 30px;\n      border-top-color: #eee; }\n    #chatlog .last-message.you:after {\n      right: 30px;\n      border-top-color: #BBDAFF; }\n", ""]);
+	exports.push([module.id, "body {\n  margin: 0;\n  font: 15px Helvetica, Arial;\n  background-color: #EEE; }\n\n.login {\n  position: absolute;\n  top: 50%;\n  width: 100%;\n  height: 100px;\n  margin-top: -100px;\n  text-align: center; }\n\n#userstatus {\n  padding: 3px; }\n\n.facebook-login {\n  padding: 10px;\n  border: none;\n  border-radius: 4px;\n  color: white;\n  font-family: \"Merriweather Sans\", sans-serif;\n  font-size: 16px;\n  width: 205px;\n  text-shadow: rgba(0, 0, 0, 0.2) -1px -1px 0;\n  background: -webkit-linear-gradient(top, #4c74c4, #3b5998);\n  background: linear-gradient(to bottom, #4c74c4, #3b5998); }\n  .facebook-login:active {\n    background: #3b5998; }\n\n.button-wrapper {\n  border: none;\n  padding: 4px;\n  border-radius: 4px;\n  position: absolute;\n  width: 60px;\n  bottom: 5px;\n  right: 5px;\n  background: -webkit-linear-gradient(top, #FF8E8E, #FF3333);\n  background: linear-gradient(to bottom, #FF8E8E, #FF3333); }\n  .button-wrapper:active {\n    background: #FF3333; }\n  .button-wrapper button {\n    padding: 0px;\n    margin: 0px;\n    width: 100%;\n    font: 15px Helvetica, Arial;\n    color: white;\n    text-shadow: rgba(0, 0, 0, 0.2) -1px -1px 0;\n    background-color: transparent;\n    border: transparent;\n    outline: none; }\n\n#chatform {\n  box-sizing: border-box;\n  position: fixed;\n  bottom: 0;\n  width: 100%;\n  padding: 5px;\n  background: #EEE;\n  border-top: 1px solid #DDD; }\n\n.input-wrapper {\n  box-sizing: border-box;\n  border-radius: 2px;\n  float: left;\n  width: calc(100% - 72px);\n  padding: 3px;\n  background: #FFF;\n  border: 1px solid #AAA;\n  outline: none; }\n\n#chatlog {\n  margin-top: 0;\n  margin-bottom: 30px;\n  padding: 3px;\n  list-style-type: none;\n  background-color: #FFF; }\n  #chatlog li {\n    border-radius: 4px;\n    position: relative;\n    margin: 5px 5px 5px 5px;\n    padding: 5px 10px; }\n    #chatlog li h5 {\n      margin: 2px;\n      padding: 0px;\n      font-weight: 100;\n      color: #555; }\n    #chatlog li img {\n      float: left;\n      padding: 2px 10px 2px 0px; }\n    #chatlog li p {\n      margin: 0; }\n    #chatlog li.you {\n      background-color: #BBDAFF; }\n    #chatlog li.other {\n      background-color: #eee; }\n  #chatlog .last-message {\n    margin: 5px 5px 15px 5px; }\n    #chatlog .last-message:after {\n      display: block;\n      position: absolute;\n      bottom: -18px;\n      width: 0;\n      content: \"\";\n      border: 9px solid transparent; }\n    #chatlog .last-message.other:after {\n      left: 30px;\n      border-top-color: #eee; }\n    #chatlog .last-message.you:after {\n      right: 30px;\n      border-top-color: #BBDAFF; }\n", ""]);
 
 /***/ },
 /* 8 */
